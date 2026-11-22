@@ -9,7 +9,7 @@ pipeline {
         // these are the environment variables (Amir's machine) that will be used in the pipeline
 
         SONARQUBE_SERVER = 'SonarQubeServer'
-        SONAR_TOKEN = 'SONAR_TOKEN' //make sure a right token is selected
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'renanhoruz/bmi_3013_renan'
         DOCKER_IMAGE_TAG = 'latest'
@@ -37,7 +37,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                    sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                    sh """mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                         -Dsonar.projectKey=OTP-SONAR \
                         -Dsonar.projectName=OTP-SONAR \
                     """
