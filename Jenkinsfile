@@ -43,7 +43,8 @@ pipeline {
                       "-Dsonar.projectKey=OTP-SONAR " +
                       "-Dsonar.projectName=OTP-SONAR " +
                       "-Dsonar.sources=src " +
-                      "-Dsonar.java.binaries=target/classes " 
+                      "-Dsonar.java.binaries=target/classes " +
+                      "-Dsonar.scanner.skipJreProvisioning=true"
                     }
                 }
             }
