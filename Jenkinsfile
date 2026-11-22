@@ -11,7 +11,7 @@ pipeline {
         SONARQUBE_SERVER = 'SonarQubeServer'
         SONAR_TOKEN = 'SONAR_TOKEN' //make sure a right token is selected
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
-        DOCKERHUB_REPO = 'renanhoruz/bmi_3013_Renan'
+        DOCKERHUB_REPO = 'renanhoruz/bmi_3013_renan'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
@@ -36,9 +36,8 @@ pipeline {
 // Check the SonarQube analysis stage for the correct project key and name
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
+                withSonarQubeEnv("SonarQubeServer") {
                     sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                        sonar-scanner \
                         -Dsonar.projectKey=OTP-SONAR \
                         -Dsonar.projectName=OTP-SONAR \
                     """
@@ -65,6 +64,4 @@ pipeline {
             }
         }
     }
-
-
 }
