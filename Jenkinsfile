@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven3'   // Must match the name configured in Jenkins Global Tool Configuration
+        sonarscanner= 'sonarscanner'
     }
 
     environment {
@@ -37,10 +38,14 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                    sh """mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:8.5.0.16571 \
-                        -Dsonar.projectKey=OTP-SONAR \
-                        -Dsonar.projectName=OTP-SONAR \
-                    """
+                  script{
+                      sh "${scannerHome}/bin/sonar-scanner " +
+                      "-Dsonar.projectKey=OTP-SONAR " +
+                      "-Dsonar.projectName=OTP-SONAR " +
+                      "-Dsonar.sources=src " +
+                      "-Dsonar.java.binaries=target/classes " +
+                      "-Dsonar.token=${env.SONAR_AUTH_TOKEN}"
+                    }
                 }
             }
         }
