@@ -8,7 +8,7 @@ pipeline {
     environment {
         // these are the environment variables (Amir's machine) that will be used in the pipeline
 
-        SONARQUBE_SERVER = 'http://localhost:9000'
+        SONARQUBE_SERVER = 'SonarQubeServer'
         SONAR_TOKEN = 'SONAR_TOKEN' //make sure a right token is selected
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'renanhoruz/bmi_3013_Renan'
