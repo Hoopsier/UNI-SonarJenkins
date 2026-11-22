@@ -9,7 +9,7 @@ pipeline {
         // these are the environment variables (Amir's machine) that will be used in the pipeline
 
         SONARQUBE_SERVER = 'SonarQubeServer'
-        SONAR_TOKEN = credentials('SONAR_TOKEN')
+        // SONAR_TOKEN = credentials('SONAR_TOKEN')
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'renanhoruz/bmi_3013_renan'
         DOCKER_IMAGE_TAG = 'latest'
@@ -44,8 +44,7 @@ pipeline {
                       "-Dsonar.projectName=OTP-SONAR " +
                       "-Dsonar.sources=src " +
                       "-Dsonar.java.binaries=target/classes " +
-                      "-Dsonar.scanner.skipJreProvisioning=true"+
-                      "-Dsonar.token=${SONAR_TOKEN}"
+                      "-Dsonar.scanner.skipJreProvisioning=true"
                     }
                 }
             }
