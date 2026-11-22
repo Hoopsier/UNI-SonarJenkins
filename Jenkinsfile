@@ -10,10 +10,9 @@ pipeline {
        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'  // Adjust to your actual JDK path
 
-
-        SONARQUBE_SERVER = 'XXXXX'
-        SONAR_TOKEN = credentials('XXXXX') //make sure a right token is selected
-        DOCKERHUB_CREDENTIALS_ID = 'XXXX'
+        SONARQUBE_SERVER = 'http://localhost:9000'
+        SONAR_TOKEN = credentials('SONAR_TOKEN') //make sure a right token is selected
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'renanhoruz/bmi_3013_Renan'
         DOCKER_IMAGE_TAG = 'latest'
     }
@@ -21,7 +20,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'YOUR own project github repo'
+                git branch: 'main', url: 'https://github.com/Hoopsier/UNI-SonarJenkins'
             }
         }
 
@@ -40,13 +39,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                    bat """
-                        sonar-scanner ^
-                        -Dsonar.projectKey=BMI_CL ^
-                        -Dsonar.sources=src ^
-                        -Dsonar.projectName=BMI_CL ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.login=${env.SONAR_TOKEN} ^
+                    sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                        sonar-scanner \
+                        -Dsonar.projectKey=BMI_CL \
+                        -Dsonar.sources=src \
+                        -Dsonar.projectName=BMI_CL \
+                        -Dsonar.host.url=${SONARQUBE_SERVER} \
+                        -Dsonar.login=${env.SONAR_TOKEN} \
                         -Dsonar.java.binaries=target/classes
                     """
                 }
