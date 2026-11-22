@@ -24,13 +24,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh '''
+                    if command -v xvfb-run >/dev/null 2>&1; then
+                        xvfb-run -a mvn test
+                    else
+                        mvn test
+                    fi
+                '''
             }
         }
 // Check the SonarQube analysis stage for the correct project key and name
@@ -44,6 +50,9 @@ pipeline {
                       "-Dsonar.projectName=OTP-SONAR " +
                       "-Dsonar.sources=src " +
                       "-Dsonar.java.binaries=target/classes " +
+                      "-Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml " +
+                      "-Dsonar.junit.reportPaths=target/surefire-reports " +
+                      "-Dsonar.java.source=21 " +
                       "-Dsonar.scanner.skipJreProvisioning=true"
                     }
                 }
