@@ -39,10 +39,6 @@ pipeline {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                   script{
                       def scannerHome = tool 'sonarscanner'
-                      sh '''
-                          echo "SonarQube URL: $SONAR_HOST_URL"
-                          curl -v "$SONAR_HOST_URL/api/system/status"
-                          '''
                       sh "${scannerHome}/bin/sonar-scanner " +
                       "-Dsonar.projectKey=OTP-SONAR " +
                       "-Dsonar.projectName=OTP-SONAR " +
