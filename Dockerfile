@@ -1,9 +1,6 @@
 # Use a known-good OpenJDK base image
 FROM eclipse-temurin:21-jdk
 
-# Optional: set up display (for GUI forwarding, Windows/macOS + X server)
-ENV DISPLAY=host.docker.internal:0.0
-
 # Install required dependencies
 RUN apt-get update && \
     apt-get install -y maven wget unzip libgtk-3-0 libgbm1 libx11-6 && \

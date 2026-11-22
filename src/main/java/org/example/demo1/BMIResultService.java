@@ -9,7 +9,7 @@ public class BMIResultService {
 
     // Environment variables with Docker-friendly defaults
     private static final String DB_HOST =
-            System.getenv().getOrDefault("DB_HOST", "db");
+            System.getenv().getOrDefault("DB_HOST", "localhost");
 
     private static final String DB_PORT =
             System.getenv().getOrDefault("DB_PORT", "3306");
@@ -18,21 +18,21 @@ public class BMIResultService {
             System.getenv().getOrDefault("DB_NAME", "bmi_localization");
 
     private static final String DB_USER =
-            System.getenv().getOrDefault("DB_USER", "root");
+            System.getenv().getOrDefault("DB_USER", "bmi_app");
 
     private static final String DB_PASSWORD =
             System.getenv().getOrDefault("DB_PASSWORD", "Test12");
 
     private static final String DB_URL =
-            "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME
-                    + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            "jdbc:mariadb://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME
+                    + "?useSSL=false&allowPublicKeyRetrieval=true";
 
     static {
         try {
-            // Ensure MySQL driver loads properly
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Ensure MariaDB driver loads properly
+            Class.forName("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println("❌ MySQL JDBC Driver not found.");
+            System.err.println("❌ MariaDB JDBC Driver not found.");
             e.printStackTrace();
         }
     }
