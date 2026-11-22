@@ -50,22 +50,30 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    def app = docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
-                    env.BUILT_IMAGE = app.id  // Optional: store image ID for reuse
-                }
-            }
+        stage('Login to Docker Hub') {
+          steps {
+              withCredentials([
+                  usernamePassword(
+                      credentialsId: 'dockerhub-credentials',
+                      usernameVariable: 'DOCKER_USER',
+                      passwordVariable: 'DOCKER_PASS'
+                  )
+              ]) {
+                  sh '''
+                      echo "$DOCKER_PASS" | docker login \
+                        -u "$DOCKER_USER" \
+                        --password-stdin
+                  '''
+              }
+          }
         }
 
-        stage('Push Docker Image to Docker Hub') {
+        stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
-                       docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
-                    }
-                }
+                sh '''
+                    docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}
+                    docker push ${DOCKERHUB_REPO}:latest
+                   '''
             }
         }
     }
