@@ -9,7 +9,7 @@ pipeline {
         // these are the environment variables (Amir's machine) that will be used in the pipeline
 
         SONARQUBE_SERVER = 'SonarQubeServer'
-        SONAR_TOKEN = credentials('SONAR_TOKEN')
+        // SONAR_TOKEN = credentials('SONAR_TOKEN')
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'renanhoruz/bmi_3013_renan'
         DOCKER_IMAGE_TAG = 'latest'
@@ -39,12 +39,15 @@ pipeline {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                   script{
                       def scannerHome = tool 'sonarscanner'
+                      sh '''
+                          echo "SonarQube URL: $SONAR_HOST_URL"
+                          curl -v "$SONAR_HOST_URL/api/system/status"
+                          '''
                       sh "${scannerHome}/bin/sonar-scanner " +
                       "-Dsonar.projectKey=OTP-SONAR " +
                       "-Dsonar.projectName=OTP-SONAR " +
                       "-Dsonar.sources=src " +
                       "-Dsonar.java.binaries=target/classes " +
-                      "-Dsonar.token=${env.SONAR_AUTH_TOKEN}"
                     }
                 }
             }
