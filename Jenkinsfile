@@ -37,7 +37,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                    sh """mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.9.0.7382 \
+                    sh """mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:8.5.0.16571 \
                         -Dsonar.projectKey=OTP-SONAR \
                         -Dsonar.projectName=OTP-SONAR \
                     """
