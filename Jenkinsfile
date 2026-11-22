@@ -36,7 +36,7 @@ pipeline {
 // Check the SonarQube analysis stage for the correct project key and name
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv("SonarQubeServer") {
+                withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                     sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                         -Dsonar.projectKey=OTP-SONAR \
                         -Dsonar.projectName=OTP-SONAR \
