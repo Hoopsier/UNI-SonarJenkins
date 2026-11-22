@@ -40,11 +40,7 @@ pipeline {
                     sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                         sonar-scanner \
                         -Dsonar.projectKey=OTP-SONAR \
-                        -Dsonar.sources=src \
                         -Dsonar.projectName=OTP-SONAR \
-                        -Dsonar.host.url=${SONARQUBE_SERVER} \
-                        -Dsonar.login=${env.SONAR_TOKEN} \
-                        -Dsonar.java.binaries=target/classes
                     """
                 }
             }
