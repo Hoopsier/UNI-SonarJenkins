@@ -39,9 +39,9 @@ pipeline {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                     sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                         sonar-scanner \
-                        -Dsonar.projectKey=BMI_CL \
+                        -Dsonar.projectKey=OTP-SONAR \
                         -Dsonar.sources=src \
-                        -Dsonar.projectName=BMI_CL \
+                        -Dsonar.projectName=OTP-SONAR \
                         -Dsonar.host.url=${SONARQUBE_SERVER} \
                         -Dsonar.login=${env.SONAR_TOKEN} \
                         -Dsonar.java.binaries=target/classes
