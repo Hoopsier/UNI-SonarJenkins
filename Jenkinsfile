@@ -72,7 +72,6 @@ pipeline {
             steps {
                 sh '''
                     docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}
-                    docker push ${DOCKERHUB_REPO}:latest
                    '''
             }
         }
