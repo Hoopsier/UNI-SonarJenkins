@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         maven 'Maven3'   // Must match the name configured in Jenkins Global Tool Configuration
-        scannerHome 'sonarscanner'
     }
 
     environment {
@@ -39,6 +38,7 @@ pipeline {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                   script{
+                      def scannerHome = tool 'sonarscanner'
                       sh "${scannerHome}/bin/sonar-scanner " +
                       "-Dsonar.projectKey=OTP-SONAR " +
                       "-Dsonar.projectName=OTP-SONAR " +
