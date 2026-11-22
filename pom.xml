@@ -15,19 +15,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>21.0.4</version>
-            <classifier>win</classifier>  <!-- Use mac or linux if needed -->
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>21</version>
-            <classifier>win</classifier>
-        </dependency>
-
         <!-- JavaFX Dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
