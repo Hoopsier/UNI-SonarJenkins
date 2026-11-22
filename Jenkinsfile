@@ -35,14 +35,12 @@ pipeline {
         }
 // Check the SonarQube analysis stage for the correct project key and name
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv() {
-                    sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                        sonar-scanner \
-                        -Dsonar.projectKey=OTP-SONAR \
-                        -Dsonar.projectName=OTP-SONAR \
-                    """
-                }
+            withSonarQubeEnv() {
+                sh """${maven}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                    sonar-scanner \
+                    -Dsonar.projectKey=OTP-SONAR \
+                    -Dsonar.projectName=OTP-SONAR \
+                """
             }
         }
 
