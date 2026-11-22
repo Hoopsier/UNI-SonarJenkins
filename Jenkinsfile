@@ -24,13 +24,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh '''
+                    xvfb-run -a mvn clean install
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'xvfb-run -a mvn test'
             }
         }
 // Check the SonarQube analysis stage for the correct project key and name
